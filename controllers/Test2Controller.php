@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Test2;
+use yii\mongodb\Query;
 
 class Test2Controller extends Controller
 {
@@ -66,5 +67,17 @@ class Test2Controller extends Controller
     {
         $test = Test2::listTests();
         return $this->render('test', ["test"=>$test]);
+    }
+    public function actionMongo()
+    {
+        $query = new Query;
+        // compose the query
+        $query
+            ->from('testInventory')
+            ->limit(10);
+        // execute the query
+        $rows = $query->all();
+        
+        return $this->render('mongo', ["test"=>$rows]);
     }
 }
